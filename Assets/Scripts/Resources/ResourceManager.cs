@@ -80,5 +80,10 @@ public class ResourceManager : MonoBehaviour
         {
             ObjectiveManager.Instance.CompleteObjective("GatherWood");
         }
+
+        if (Stone >= 40)
+        {
+            ObjectiveManager.Instance.CompleteObjective("GatherStone");
+        }
     }
 }

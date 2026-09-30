@@ -7,6 +7,8 @@ public class ObjectiveManager : MonoBehaviour
 
     [SerializeField] private TMP_Text objectiveText;
     [SerializeField] private BuildingPlot watchtowerPlot;
+    [SerializeField] private BuildingPlot quarryPlot;
+    [SerializeField] private BuildingPlot crossingRepairPlot;
 
     private string currentObjectiveId;
 
@@ -68,8 +70,47 @@ public class ObjectiveManager : MonoBehaviour
                 break;
 
             case "BuildWatchtower":
-                objectiveText.text = "Objective complete";
+                SetObjective(
+                    "SurviveFlood",
+                    "Survive the first flood"
+                );
                 break;
+
+            case "SurviveFlood":
+                if (quarryPlot != null)
+                {
+                    quarryPlot.Unlock();
+                }
+
+                SetObjective(
+                    "BuildQuarry",
+                    "Build a Quarry"
+                );
+                break;
+
+            case "BuildQuarry":
+                SetObjective(
+                    "GatherStone",
+                    "Gather 40 Stone"
+                );
+                break;
+
+            case "GatherStone":
+                if (crossingRepairPlot != null)
+                {
+                    crossingRepairPlot.Unlock();
+                }
+
+                SetObjective(
+                    "RepairCrossing",
+                    "Repair the Broken Crossing"
+                );
+                break;
+
+            case "RepairCrossing":
+                objectiveText.text = "Lowland unlocked";
+                break;
+
         }
     }
 }
