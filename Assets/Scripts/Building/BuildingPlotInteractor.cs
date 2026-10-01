@@ -1,60 +1,120 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class BuildingPlotInteractor : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Camera targetCamera;
-    [SerializeField] private LayerMask buildingPlotLayer;
+    [SerializeField]
+    private BuildingPlotTooltipUI tooltipUI;
 
-    private BuildingPlot hoveredPlot;
+    [Header("Raycast")]
+    [SerializeField]
+    private LayerMask buildingPlotLayer;
+
+    [SerializeField]
+    private float maxRayDistance = 500f;
+
+    private BuildingPlot currentHoveredPlot;
+
+    private void Awake()
+    {
+        if (targetCamera == null)
+        {
+            targetCamera = Camera.main;
+        }
+    }
 
     private void Update()
     {
-        UpdateHover();
-
-        if (Mouse.current != null &&
-            Mouse.current.leftButton.wasPressedThisFrame &&
-            hoveredPlot != null)
+        if (Mouse.current == null ||
+            targetCamera == null)
         {
-            hoveredPlot.Select();
-        }
-    }
-
-    private void UpdateHover()
-    {
-        if (Mouse.current == null || targetCamera == null)
             return;
+        }
 
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-
-        Ray ray = targetCamera.ScreenPointToRay(mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 500.0f, buildingPlotLayer))
+        if (EventSystem.current != null &&
+            EventSystem.current.IsPointerOverGameObject())
         {
-            BuildingPlot plot = hit.collider.GetComponent<BuildingPlot>();
+            ClearHoveredPlot();
+            return;
+        }
 
-            if (plot != hoveredPlot)
+        Vector2 mousePosition =
+            Mouse.current.position.ReadValue();
+
+        Ray ray =
+            targetCamera.ScreenPointToRay(
+                mousePosition
+            );
+
+        if (Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                maxRayDistance,
+                buildingPlotLayer,
+                QueryTriggerInteraction.Ignore))
+        {
+            BuildingPlot plot =
+                hit.collider
+                    .GetComponentInParent<BuildingPlot>();
+
+            if (plot != null)
             {
-                ClearCurrentHover();
+                SetHoveredPlot(plot);
 
-                hoveredPlot = plot;
+                if (tooltipUI != null)
+                {
+                    tooltipUI.Show(plot, targetCamera);
+                }
 
-                if (hoveredPlot != null)
-                    hoveredPlot.SetHovered(true);
+                if (Mouse.current
+                    .leftButton
+                    .wasPressedThisFrame)
+                {
+                    plot.Select();
+                }
+
+                return;
             }
-
-            return;
         }
 
-        ClearCurrentHover();
+        ClearHoveredPlot();
     }
 
-    private void ClearCurrentHover()
+    private void SetHoveredPlot(
+        BuildingPlot plot)
     {
-        if (hoveredPlot != null)
+        if (currentHoveredPlot == plot)
+            return;
+
+        if (currentHoveredPlot != null)
         {
-            hoveredPlot.SetHovered(false);
-            hoveredPlot = null;
+            currentHoveredPlot.SetHovered(false);
         }
+
+        currentHoveredPlot = plot;
+
+        currentHoveredPlot.SetHovered(true);
+    }
+
+    private void ClearHoveredPlot()
+    {
+        if (currentHoveredPlot != null)
+        {
+            currentHoveredPlot.SetHovered(false);
+            currentHoveredPlot = null;
+        }
+
+        if (tooltipUI != null)
+        {
+            tooltipUI.Hide();
+        }
+    }
+
+    private void OnDisable()
+    {
+        ClearHoveredPlot();
     }
 }
