@@ -85,5 +85,10 @@ public class ResourceManager : MonoBehaviour
         {
             ObjectiveManager.Instance.CompleteObjective("GatherStone");
         }
+
+        if (Food >= 30)
+        {
+            ObjectiveManager.Instance.CompleteObjective("GatherFood");
+        }
     }
 }

@@ -9,6 +9,9 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private BuildingPlot watchtowerPlot;
     [SerializeField] private BuildingPlot quarryPlot;
     [SerializeField] private BuildingPlot crossingRepairPlot;
+    [SerializeField] private BuildingPlot safeFarmPlot;
+    [SerializeField] private BuildingPlot lowlandFarmPlot;
+    [SerializeField] private BuildingPlot beaconPlot;
 
     private string currentObjectiveId;
 
@@ -108,7 +111,50 @@ public class ObjectiveManager : MonoBehaviour
                 break;
 
             case "RepairCrossing":
-                objectiveText.text = "Lowland unlocked";
+                if (safeFarmPlot != null)
+                {
+                    safeFarmPlot.Unlock();
+                }
+
+                if (lowlandFarmPlot != null)
+                {
+                    lowlandFarmPlot.Unlock();
+                }
+
+                SetObjective(
+                    "BuildFarm",
+                    "Establish Food Production"
+                );
+                break;
+
+            case "BuildFarm":
+                SetObjective(
+                    "GatherFood",
+                    "Gather 30 Food"
+                );
+                break;
+
+            case "GatherFood":
+                if (beaconPlot != null)
+                {
+                    beaconPlot.Unlock();
+                }
+
+                SetObjective(
+                    "ActivateBeacon",
+                    "Activate the Ancient Beacon"
+                );
+                break;
+
+            case "ActivateBeacon":
+                currentObjectiveId = string.Empty;
+
+                if (objectiveText != null)
+                {
+                    objectiveText.text = "Scenario Complete - Tidefall Colony Secured";
+                }
+
+                Debug.Log("Scenario completed.");
                 break;
 
         }

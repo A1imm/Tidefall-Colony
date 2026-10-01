@@ -16,6 +16,7 @@ public class ResourceProducer : MonoBehaviour
     [SerializeField] private float productionInterval = 3.0f;
 
     private Coroutine productionCoroutine;
+    private bool productionEnabled = true;
 
     private void OnEnable()
     {
@@ -37,7 +38,10 @@ public class ResourceProducer : MonoBehaviour
         {
             yield return new WaitForSeconds(productionInterval);
 
-            ProduceResource();
+            if (productionEnabled)
+            {
+                ProduceResource();
+            }
         }
     }
 
@@ -63,5 +67,14 @@ public class ResourceProducer : MonoBehaviour
                 ResourceManager.Instance.AddFood(amountPerTick);
                 break;
         }
+    }
+
+    public void SetProductionEnabled(bool enabled)
+    {
+        productionEnabled = enabled;
+
+        Debug.Log(
+            $"{gameObject.name} production: {(enabled ? "ENABLED" : "DISABLED")}"
+        );
     }
 }
