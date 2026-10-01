@@ -11,7 +11,11 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private BuildingPlot crossingRepairPlot;
     [SerializeField] private BuildingPlot safeFarmPlot;
     [SerializeField] private BuildingPlot lowlandFarmPlot;
+    [SerializeField] private BuildingPlot lowlandFarmBPlot;
     [SerializeField] private BuildingPlot beaconPlot;
+    [SerializeField] private BuildingPlot warehousePlot;
+    [SerializeField] private GameObject scenarioCompletePanel;
+    [SerializeField] private GameObject gameplayHud;
 
     private string currentObjectiveId;
 
@@ -21,6 +25,16 @@ public class ObjectiveManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+
+        if (scenarioCompletePanel != null)
+        {
+            scenarioCompletePanel.SetActive(false);
+        }
+
+        if (gameplayHud != null)
+        {
+            gameplayHud.SetActive(true);
         }
 
         Instance = this;
@@ -55,6 +69,25 @@ public class ObjectiveManager : MonoBehaviour
         {
             case "BuildLumberCamp":
                 SetObjective(
+                    "GatherWoodForWarehouse",
+                    "Gather 20 Wood"
+                );
+                break;
+
+            case "GatherWoodForWarehouse":
+                if (warehousePlot != null)
+                {
+                    warehousePlot.Unlock();
+                }
+
+                SetObjective(
+                    "BuildWarehouse",
+                    "Build a Warehouse"
+                );
+                break;
+
+            case "BuildWarehouse":
+                SetObjective(
                     "GatherWood",
                     "Gather 40 Wood"
                 );
@@ -73,13 +106,6 @@ public class ObjectiveManager : MonoBehaviour
                 break;
 
             case "BuildWatchtower":
-                SetObjective(
-                    "SurviveFlood",
-                    "Survive the first flood"
-                );
-                break;
-
-            case "SurviveFlood":
                 if (quarryPlot != null)
                 {
                     quarryPlot.Unlock();
@@ -92,6 +118,13 @@ public class ObjectiveManager : MonoBehaviour
                 break;
 
             case "BuildQuarry":
+                SetObjective(
+                    "SurviveFlood",
+                    "Survive the next flood"
+                );
+                break;
+
+            case "SurviveFlood":
                 SetObjective(
                     "GatherStone",
                     "Gather 40 Stone"
@@ -121,6 +154,11 @@ public class ObjectiveManager : MonoBehaviour
                     lowlandFarmPlot.Unlock();
                 }
 
+                if (lowlandFarmBPlot != null)
+                {
+                    lowlandFarmBPlot.Unlock();
+                }
+
                 SetObjective(
                     "BuildFarm",
                     "Establish Food Production"
@@ -128,6 +166,13 @@ public class ObjectiveManager : MonoBehaviour
                 break;
 
             case "BuildFarm":
+                SetObjective(
+                    "SurviveSecondFlood",
+                    "Survive the next flood"
+                );
+                break;
+
+            case "SurviveSecondFlood":
                 SetObjective(
                     "GatherFood",
                     "Gather 30 Food"
@@ -147,11 +192,16 @@ public class ObjectiveManager : MonoBehaviour
                 break;
 
             case "ActivateBeacon":
-                currentObjectiveId = string.Empty;
+                currentObjectiveId = "";
 
-                if (objectiveText != null)
+                if (gameplayHud != null)
                 {
-                    objectiveText.text = "Scenario Complete - Tidefall Colony Secured";
+                    gameplayHud.SetActive(false);
+                }
+
+                if (scenarioCompletePanel != null)
+                {
+                    scenarioCompletePanel.SetActive(true);
                 }
 
                 Debug.Log("Scenario completed.");
