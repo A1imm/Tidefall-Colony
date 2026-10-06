@@ -109,7 +109,7 @@ The complete scenario takes approximately **5 minutes** during a normal playthro
 
 ## Technical Implementation
 
-**Engine:** Unity 6  
+**Engine:** Unity 6 (6000.5.9f1) 
 **Render Pipeline:** Universal Render Pipeline (URP)  
 **Programming:** C#  
 **Level Logic:** Unity Visual Scripting  
@@ -154,11 +154,19 @@ This allowed the visual presentation to improve without changing the tested spat
 | **Mouse Hover** | Inspect building plot |
 | **Left Mouse Button** | Build / repair |
 
-## Art
+## Art & Third-Party Assets
 
 The environment uses selected free low-poly assets from **Polyfork**, combined with custom materials, layout work and additional prototype assets created specifically for Tidefall Colony.
 
-The environment art was used as a presentation layer over the gameplay-tested level geometry rather than as the starting point for the level layout.
+Polyfork assets are used under the Polyfork license:
+
+https://polyfork.dev/licensing
+
+The original Polyfork model files are **not included in this public source repository**, as their license does not allow redistribution of the standalone asset files.
+
+Playable builds may include these assets as part of the finished game.
+
+For more information, see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ## Repository Structure
 
@@ -180,22 +188,35 @@ docs/
 └── images/              # Portfolio screenshots
 ```
 
-## Running the Project
+## Source Project
 
-1. Open the project in Unity 6.
-2. Open:
+The repository contains the Unity project, gameplay systems, scenes, scripts and design logic used to develop Tidefall Colony.
 
-   `Assets/Scenes/TidefallColony_Prototype.unity`
+The project was developed with:
 
-3. Enter Play Mode.
+**Unity 6 (6000.5.9f1)**
 
-The original greybox scene is preserved separately for design/process documentation.
+The main prototype scene is:
+
+`Assets/Scenes/TidefallColony_Prototype.unity`
+
+Some third-party visual assets used in the final presentation are intentionally excluded from the public repository due to their redistribution license.
+
+As a result, cloning the repository does not reproduce the complete final visual presentation without restoring the required third-party assets.
+
+For the complete playable version, use one of the published builds.
 
 ## Design Focus
 
 Tidefall Colony is not intended to be a full city-builder.
 
 It is a small, deliberately scoped prototype exploring how **terrain, resource constraints, environmental pressure and level progression can combine to produce meaningful decisions with a limited number of systems**.
+
+## License
+
+Original source code created for Tidefall Colony is available under the [MIT License](LICENSE).
+
+Third-party assets are not covered by the MIT License. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for details.
 
 ## Author
 

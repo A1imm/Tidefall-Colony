@@ -42,3 +42,7 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
+
+# Third-party assets - Polyfork
+/Assets/Art/Polyfork/
+/Assets/Art/Polyfork.meta
