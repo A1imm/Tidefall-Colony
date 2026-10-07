@@ -8,6 +8,18 @@ The project was designed as a short 5-minute playable scenario focused on **leve
 
 ![Tidefall Colony Overview](docs/images/01_overview.png)
 
+## Playable Builds
+
+### Play in Browser
+▶ **[Play Tidefall Colony on itch.io](https://a1imm17.itch.io/tidefall-colony)**
+
+No installation required. The complete prototype can be played directly in a desktop browser.
+
+### Windows
+⬇ **[Download Windows build — v0.1.0](https://github.com/A1imm/Tidefall-Colony/releases/tag/v0.1.0)**
+
+Windows 10/11, 64-bit.
+
 ## Project Goals
 
 Tidefall Colony was created as a focused portfolio project demonstrating:
