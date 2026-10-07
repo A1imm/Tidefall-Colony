@@ -46,3 +46,13 @@ sysinfo.txt
 # Third-party assets - Polyfork
 /Assets/Art/Polyfork/
 /Assets/Art/Polyfork.meta
+
+# Root build artifacts
+/Data/
+
+# Unity Visual Scripting generated cache
+/Assets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+/Assets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+/Assets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers/
+/Assets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+/Assets/Unity.VisualScripting.Generated/VisualScripting.Core.meta
